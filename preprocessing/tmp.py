@@ -9,7 +9,7 @@ df = pd.read_csv('data/dataset.csv')
 
 
 new_df =df.drop(['Div','B365H','B365D','B365A','BWH','BWD','BWA','WHH','WHD',
-         'WHA', 'MaxH','MaxD', 'MaxA', 'B365>2.5', 'B365<2.5', 'Max>2.5',
+         'WHA', 'HTR','MaxH','MaxD', 'MaxA', 'B365>2.5', 'B365<2.5', 'Max>2.5',
          'Max<2.5', 'AHh','B365AHH', 'B365AHA', 'PAHH', 'PAHA', 'MaxAHH',
          'MaxAHA', 'AvgAHH', 'AvgAHA', 'B365CH', 'B365CD', 'B365CA', 'BWCH',
          'BWCD', 'BWCA','PSCH', 'PSCD', 'PSCA', 'WHCH', 'WHCD', 'WHCA', 'MaxCH',
