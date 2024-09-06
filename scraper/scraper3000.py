@@ -2,7 +2,8 @@ import cloudscraper
 from selectolax.parser import HTMLParser
 from bs4 import BeautifulSoup as bs
 import pandas as pd
-'''scraper = cloudscraper.create_scraper()
+
+scraper = cloudscraper.create_scraper()
 response = scraper.get('https://www.football-data.co.uk/belgiumm.php').content
 
 soup = bs(response, 'html.parser')
@@ -15,8 +16,9 @@ for i, csvf in enumerate(csv_links):
     
     file_name = f'data/dataset{i+1}.csv'
     with open(file_name, 'wb') as file:
-        file.write(response.content)'''
+        file.write(response.content)
 
+# 2019 - 25 same columns before noope 
 
 for i in range(30+1):
     df = pd.read_fwf(f'data/dataset{i}.csv')
