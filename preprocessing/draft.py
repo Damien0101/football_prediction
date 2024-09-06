@@ -77,7 +77,6 @@ for i in range(len(df)):
     home_team = df.iloc[i].HomeTeam
     away_team = df.iloc[i].AwayTeam
     
-    # Calculate stats for home team (as 'home') and away team (as 'away') for 5, 10, and 20 games
     Home_stats_5 = get_stats(df.iloc[i:], [home_team], 'home', 5)
     Away_stats_5 = get_stats(df.iloc[i:], [away_team], 'away', 5)
     Home_stats_10 = get_stats(df.iloc[i:], [home_team], 'home', 10)
@@ -85,5 +84,6 @@ for i in range(len(df)):
     Home_stats_20 = get_stats(df.iloc[i:], [home_team], 'home', 20) 
     Away_stats_20 = get_stats(df.iloc[i:], [away_team], 'away', 20)
 
-    # Print the results for each iteration (you can store or further process these)
+
     print(Home_stats_5, Away_stats_5, Home_stats_10, Away_stats_10, Home_stats_20, Away_stats_20)
+
