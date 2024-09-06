@@ -32,7 +32,8 @@ print(teams_count)
 
 # Create a function to get the average stats of home team for n_games
 
-"""def get_avg_stats(df, teams, n_games):
+"""
+def get_avg_stats(df, teams, n_games):
     # Get the average stats of the home team for the last n_games   
     for team in teams:
         home_team_stats =  {
@@ -59,6 +60,7 @@ print(teams_count)
         }
     
     # Fetch last num_games where team played as home or away
-    team_games = df[(df['HomeTeam'] == team) | (df['AwayTeam'] == team)].head(num_games)"""
+    team_games = df[(df['HomeTeam'] == team) | (df['AwayTeam'] == team)].head(num_games)
 
 
+"""
