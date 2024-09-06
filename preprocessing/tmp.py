@@ -21,7 +21,7 @@ new_df.dropna(inplace=True)
 
 ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False).set_output(transform='pandas')
 ohetransform = ohe.fit_transform(new_df[['FTR']])
-new_df = pd.concat([new_df, ohetransform], axis=1).drop(columns=['FTR'])
+new_df = pd.concat([new_df, ohetransform], axis=1)
 
 
 numeric_columns = new_df.select_dtypes(include=[np.number]).columns
