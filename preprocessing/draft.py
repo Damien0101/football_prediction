@@ -397,5 +397,6 @@ df = df.merge(df_red_cards_per_game_last20, how='left', left_on='AwayTeam', righ
 df = df.merge(df_red_cards_conceded_per_game_last20, how='left', left_on='HomeTeam', right_index=True, suffixes=('', '_home_last20'))
 df = df.merge(df_red_cards_conceded_per_game_last20, how='left', left_on='AwayTeam', right_index=True, suffixes=('', '_away_last20'))
 
+df = df.drop(['HomeTeam', 'AwayTeam'], axis=1)
 df.to_csv('data/combined_stats.csv', index=False)
 print(df.head())
