@@ -1,22 +1,22 @@
 import sqlite3
 
-conn = sqlite3.connect('db/database.db')
+conn = sqlite3.connect('db.db')
 cur = conn.cursor()
 
 teams = """
     CREATE TABLE Teams (
-        TeamID INT IDENTITY(1,1) PRIMARY KEY,
+        TeamID INTEGER PRIMARY KEY AUTOINCREMENT,
         TeamName VARCHAR(50) NOT NULL
     );
 """
 
 matches = """
     CREATE TABLE Matches (
-        MatchID INT IDENTITY(1,1) PRIMARY KEY,
-        Date NOT NULL,
-        Time NOT NULL,
-        HomeTeamID INT,
-        AwayTeamID INT,
+        MatchID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Date TEXT NOT NULL,
+        Time TEXT NOT NULL,
+        HomeTeamID INTEGER,
+        AwayTeamID INTEGER,
         FOREIGN KEY (HomeTeamID) REFERENCES Teams(TeamID),
         FOREIGN KEY (AwayTeamID) REFERENCES Teams(TeamID)
     );
@@ -24,8 +24,8 @@ matches = """
 
 stats = """
     CREATE TABLE Stats (
-        StatID INT INDENTITY(1,1) PRIMARY KEY,
-        MatchID INT,
+        StatID INTEGER PRIMARY KEY AUTOINCREMENT,
+        MatchID INTEGER,
         FTHG INT,     
         FTAG INT,     
         HTHG INT,   
@@ -43,13 +43,13 @@ stats = """
         HR INT,       
         AR INT,       
         FOREIGN KEY (MatchID) REFERENCES Matches(MatchID)
-);
+    );
 """
 
 odds = """
     CREATE TABLE Odds (
-        OddsID INT IDENTITY(1,1) PRIMARY KEY,
-        MatchID INT,
+        OddsID INTEGER PRIMARY KEY AUTOINCREMENT,
+        MatchID INTEGER,
         PSH DECIMAL(5,2),    
         PSD DECIMAL(5,2),    
         PSA DECIMAL(5,2),    
@@ -57,13 +57,13 @@ odds = """
         AvgD DECIMAL(5,2),   
         AvgA DECIMAL(5,2),   
         FOREIGN KEY (MatchID) REFERENCES Matches(MatchID)
-);
+    );
 """
 
 results = """
     CREATE TABLE Results (
-        ResultID INT IDENTITY(1,1) PRIMARY KEY,
-        MatchID INT,
+        ResultID INTEGER PRIMARY KEY AUTOINCREMENT,
+        MatchID INTEGER,
         PSH DECIMAL(5,2),    
         PSD DECIMAL(5,2),    
         PSA DECIMAL(5,2),  
@@ -71,7 +71,7 @@ results = """
         AvgD DECIMAL(5,2),  
         AvgA DECIMAL(5,2),   
         FOREIGN KEY (MatchID) REFERENCES Matches(MatchID)
-);
+    );
 """
 
 cur.execute(teams)
@@ -79,3 +79,6 @@ cur.execute(matches)
 cur.execute(stats)
 cur.execute(odds)
 cur.execute(results)
+
+conn.commit()
+conn.close()
