@@ -5,7 +5,6 @@ import seaborn as sns
 
 
 def get_stats(df, teams, team_status, num_games):
-    stats = {}
     for team in teams:
         team_stats = {
             str(team_status)+'_average_goals_scored_'+ str(num_games): 0,
@@ -62,9 +61,7 @@ def get_stats(df, teams, team_status, num_games):
         team_stats[str(team_status)+'_yellow_cards_per_game_'+ str(num_games)] = (home_games['HY'].sum() + away_games['AY'].sum()) / num_games
         team_stats[str(team_status)+'_yellow_cards_conceded_per_game_'+ str(num_games)] = (home_games['AY'].sum() + away_games['HY'].sum()) / num_games
         team_stats[str(team_status)+'_red_cards_per_game_'+ str(num_games)] = (home_games['HR'].sum() + away_games['AR'].sum()) / num_games
-        team_stats[str(team_status)+'_red_cards_conceded_per_game_'+ str(num_games)] = (home_games['AR'].sum() + away_games['HR'].sum()) / num_games
-
-        
+        team_stats[str(team_status)+'_red_cards_conceded_per_game_'+ str(num_games)] = (home_games['AR'].sum() + away_games['HR'].sum()) / num_games     
 
     return team_stats
 
@@ -78,6 +75,10 @@ rows = []
 for i in range(len(df)):
     home_team = df.iloc[i].HomeTeam
     away_team = df.iloc[i].AwayTeam
+    ftr_H = df.iloc[i].FTR_H
+    ftr_A = df.iloc[i].FTR_A
+    ftr_D = df.iloc[i].FTR_D
+
     
     Home_stats_5 = get_stats(df.iloc[i:], [home_team], 'home', 5)
     Away_stats_5 = get_stats(df.iloc[i:], [away_team], 'away', 5)
@@ -90,6 +91,9 @@ for i in range(len(df)):
     row_stats = {
         'HomeTeam': home_team,
         'AwayTeam': away_team,
+        'FTR_H': ftr_H,
+        'FTR_A': ftr_A,
+        'FTR_D': ftr_D,
         'home_average_goals_scored_5': Home_stats_5['home_average_goals_scored_5'],
         'home_average_goals_conceded_5': Home_stats_5['home_average_goals_conceded_5'],
         'home_average_goal_difference_5': Home_stats_5['home_average_goal_difference_5'],
