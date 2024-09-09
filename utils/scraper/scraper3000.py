@@ -35,13 +35,14 @@ csv_links = extract_csv_links(soup)
 save_csv_files(csv_links)
 
 
-# get all the columns name from the csvs
+
+''' # get all the columns name from the csvs
 with open('col_name.txt', 'a', newline='') as csv:
     for i in range(30):
         df = pd.read_fwf(f'dataa/dataset{i+1}.csv')
         col = list(df.columns)
         csv.write(f'\n csv n°{i+1} \n {col}\n')
-
+'''
 
 
 
