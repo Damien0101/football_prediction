@@ -1,6 +1,7 @@
 import cloudscraper
 from selectolax.parser import HTMLParser
 from bs4 import BeautifulSoup as bs
+import pandas as pd
 
 
 # instantiate the cloudscraper object
@@ -14,12 +15,13 @@ def fetch_and_parse_html(url: str) -> bs:
 
 def extract_csv_links(soup: bs, link_text: str = 'Jupiler League') -> list[str]:
     """ Extracts CSV links for the given link text from the soup object. """
-    return [link.get('href') for link in soup.find_all('a', href=True, string=link_text)]
+    csv_links = [link.get('href') for link in soup.find_all('a', href=True, string=link_text)]
+    return csv_links
 
 
-def save_csv_files(csv_links: list[str], save_dir: str = 'dataa/') -> None:
+def save_csv_files(csv_links: list[str], save_dir: str = 'data/') -> None:
     """ Downloads CSV files from the provided links and saves them locally. """
-    for i, csv_link in enumerate(csv_links):
+    for i, csv_link in enumerate(csv_links[:8]):
         url = f'https://www.football-data.co.uk/{csv_link}'
         response = scraper.get(url)
         file_name = f'{save_dir}dataset{i+1}.csv'
@@ -32,9 +34,8 @@ soup = fetch_and_parse_html(url)
 csv_links = extract_csv_links(soup)
 save_csv_files(csv_links)
 
-import pandas as pd
 
-# get all the columns name from the csv
+# get all the columns name from the csvs
 with open('col_name.txt', 'a', newline='') as csv:
     for i in range(30):
         df = pd.read_fwf(f'dataa/dataset{i+1}.csv')
