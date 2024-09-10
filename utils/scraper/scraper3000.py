@@ -2,6 +2,7 @@ import cloudscraper
 from selectolax.parser import HTMLParser
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import os
 
 
 # instantiate the cloudscraper object
@@ -19,14 +20,29 @@ def extract_csv_links(soup: bs, link_text: str = 'Jupiler League') -> list[str]:
     return csv_links
 
 
-def save_csv_files(csv_links: list[str], save_dir: str = 'data/') -> None:
+def save_csv_files(csv_links: list[str], save_dir: str = '/home/servietske/Desktop/Becode/football_prediction/data/') -> None:
     """ Downloads CSV files from the provided links and saves them locally. """
-    for i, csv_link in enumerate(csv_links[:8]):
-        url = f'https://www.football-data.co.uk/{csv_link}'
-        response = scraper.get(url)
-        file_name = f'{save_dir}dataset{i+1}.csv'
+    url = f'https://www.football-data.co.uk/{csv_links[0]}'
+    response = scraper.get(url)
+
+    file_name = f'{csv_links[0][8:].replace("/", "_")}'
+    file_names = os.listdir(save_dir)
+
+    if os.path.getsize(f'/home/servietske/Desktop/Becode/football_prediction/data/{file_names[-1]}') == len(response.content):
+        print('updating file...')
         with open(file_name, 'wb') as file:
             file.write(response.content)
+    else:
+        print('file is up to date')
+
+
+    if csv_links[0] == file_names[-1]:
+        print('adding new file...')
+        with open(file_name, 'wb') as file:
+            file.write(response.content)
+    else:  
+        print('file is up to date')
+            
 
 
 url = 'https://www.football-data.co.uk/belgiumm.php'
@@ -34,6 +50,44 @@ soup = fetch_and_parse_html(url)
 csv_links = extract_csv_links(soup)
 save_csv_files(csv_links)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''csv_directory = '/home/servietske/Desktop/Becode/football_prediction/data/'
+
+colonnes_a_garder = ['FTR', 'Date', 'Time', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'HTHG', 'HTAG', 
+                     'HS', 'AS', 'HST', 'AST', 'HF', 'AF', 'HC', 'AC', 'HY', 'AY', 'HR', 'AR', 
+                     'PSH', 'PSD', 'PSA', 'AvgH', 'AvgD', 'AvgA', 'FTR_A', 'FTR_D', 'FTR_H']
+
+dfs = []
+
+for i in range(1, 9):
+    file_path = os.path.join(csv_directory, f'dataset{i}.csv')
+    df = pd.read_csv(file_path)
+    dfs.append(df)
+
+concatenated_df = pd.concat(dfs, ignore_index=True)
+existing_columns = [col for col in colonnes_a_garder if col in concatenated_df.columns]
+
+selected_columns_df = concatenated_df[existing_columns]
+selected_columns_df.dropna(how='all', inplace=True)
+
+selected_columns_df.to_csv(os.path.join(csv_directory, 'final_stats_clean.csv'), index=False)
+
+
+print(selected_columns_df.isnull().sum())
+print(selected_columns_df.shape)
+'''
 
 
 ''' # get all the columns name from the csvs
