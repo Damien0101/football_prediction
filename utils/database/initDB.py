@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('db.db')
+conn = sqlite3.connect('data/database.db')
 cur = conn.cursor()
 
 teams = """
@@ -13,8 +13,8 @@ teams = """
 matches = """
     CREATE TABLE Matches (
         MatchID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Date TEXT NOT NULL,
-        Time TEXT NOT NULL,
+        Date TEXT,
+        Time TEXT,
         HomeTeamID INTEGER,
         AwayTeamID INTEGER,
         FOREIGN KEY (HomeTeamID) REFERENCES Teams(TeamID),
@@ -46,19 +46,6 @@ stats = """
     );
 """
 
-odds = """
-    CREATE TABLE Odds (
-        OddsID INTEGER PRIMARY KEY AUTOINCREMENT,
-        MatchID INTEGER,
-        PSH DECIMAL(5,2),    
-        PSD DECIMAL(5,2),    
-        PSA DECIMAL(5,2),    
-        AvgH DECIMAL(5,2),   
-        AvgD DECIMAL(5,2),   
-        AvgA DECIMAL(5,2),   
-        FOREIGN KEY (MatchID) REFERENCES Matches(MatchID)
-    );
-"""
 
 results = """
     CREATE TABLE Results (
@@ -77,7 +64,6 @@ results = """
 cur.execute(teams)
 cur.execute(matches)
 cur.execute(stats)
-cur.execute(odds)
 cur.execute(results)
 
 conn.commit()

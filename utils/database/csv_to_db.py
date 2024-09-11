@@ -1,10 +1,10 @@
 import pandas as pd
 import sqlite3
 
-conn = sqlite3.connect('../data/db.db')
+conn = sqlite3.connect('data/database.db')
 cur = conn.cursor()
 
-df = pd.read_csv('../data/2425_B1.csv')
+df = pd.read_csv('data/2324_B1.csv')
 
 for index, row in df.iterrows():
     match_id = index + 1
@@ -27,21 +27,7 @@ for index, row in df.iterrows():
     
     cur.execute("INSERT INTO Stats (MatchID, FTHG, FTAG, HTHG, HTAG, HS, `AS`, HST, AST, HF, AF, HC, AC, HY, AY, HR, AR) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (match_id, fthg, ftag, hthg, htag, hs, as_, hst, ast, hf, af, hc, ac, hy, ay, hr, ar))
-    
-
-
-for index, row in df.iterrows():
-    match_id = index + 1
-    psh = row['PSH']
-    psd = row['PSD']
-    psa = row['PSA']
-    avgh = row['AvgH']
-    avgd = row['AvgD']
-    avga = row['AvgA']
-    
-    cur.execute("INSERT INTO Odds (MatchID, PSH, PSD, PSA, AvgH, AvgD, AvgA) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (match_id, psh, psd, psa, avgh, avgd, avga))
-    
+       
 
 
 for index, row in df.iterrows():
@@ -62,12 +48,17 @@ for index, row in df.iterrows():
     match_id = index + 1
     date = row['Date']
     time = row['Time']
-    home_team_id = row['HomeTeamID']
-    away_team_id = row['AwayTeamID']
+    home_team_id = row['HomeTeam']
+    away_team_id = row['AwayTeam']
     
     cur.execute("INSERT INTO Matches (MatchID, Date, Time, HomeTeamID, AwayTeamID) VALUES (?, ?, ?, ?, ?)",
                 (match_id, date, time, home_team_id, away_team_id))
 
-conn.commit()
+'''
+team_names = list(set(df['HomeTeam'].unique() + df['AwayTeam'].unique()))    
 
+for team_name in team_names:
+    cur.execute("INSERT INTO Teams (TeamName) VALUES (?)", (team_name,))
+'''
+conn.commit()
 
