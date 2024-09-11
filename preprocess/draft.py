@@ -1,0 +1,402 @@
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+import seaborn as sns
+
+
+def get_stats(df, teams, team_status, num_games):
+    for team in teams:
+        team_stats = {
+            str(team_status)+'_average_goals_scored_'+ str(num_games): 0,
+            str(team_status)+'_average_goals_conceded_'+ str(num_games): 0,
+            str(team_status)+'_average_goal_difference_'+ str(num_games): 0,
+            str(team_status)+'_win_rate_'+ str(num_games): 0,
+            str(team_status)+'_draw_rate_'+ str(num_games): 0,
+            str(team_status)+'_loss_rate_'+ str(num_games): 0,
+            str(team_status)+'_shots_per_game_'+ str(num_games): 0,
+            str(team_status)+'_shots_on_target_per_game_'+ str(num_games): 0,
+            str(team_status)+'_shots_conceded_per_game_'+ str(num_games): 0,
+            str(team_status)+'_shots_on_target_conceded_per_game_'+ str(num_games): 0,
+            'Home_when_Home_average_goals_scored_'+ str(num_games): 0,
+            'Home_when_Home_average_goals_conceded_'+ str(num_games): 0,
+            'Home_when_Home_average_goal_difference_'+ str(num_games): 0,
+            'Home_when_Home_win_rate_'+ str(num_games): 0,
+            'Home_when_Home_draw_rate_'+ str(num_games): 0,
+            'Home_when_Home_loss_rate_'+ str(num_games): 0,
+            'Home_when_Home_shots_per_game_'+ str(num_games): 0,
+            'Home_when_Home_shots_on_target_per_game_'+ str(num_games): 0,
+            'Home_when_Home_shots_conceded_per_game_'+ str(num_games): 0,
+            'Home_when_Home_shots_on_target_conceded_per_game_'+ str(num_games): 0,
+            'Home_when_Away_average_goals_scored_'+ str(num_games): 0,
+            'Home_when_Away_average_goals_conceded_'+ str(num_games): 0,
+            'Home_when_Away_average_goal_difference_'+ str(num_games): 0,
+            'Home_when_Away_win_rate_'+ str(num_games): 0,
+            'Home_when_Away_draw_rate_'+ str(num_games): 0,
+            'Home_when_Away_loss_rate_'+ str(num_games): 0,
+            'Home_when_Away_shots_per_game_'+ str(num_games): 0,
+            'Home_when_Away_shots_on_target_per_game_'+ str(num_games): 0,
+            'Home_when_Away_shots_conceded_per_game_'+ str(num_games): 0,
+            'Home_when_Away_shots_on_target_conceded_per_game_'+ str(num_games): 0,
+            'Away_when_Home_average_goals_scored_'+ str(num_games): 0,
+            'Away_when_Home_average_goals_conceded_'+ str(num_games): 0,
+            'Away_when_Home_average_goal_difference_'+ str(num_games): 0,
+            'Away_when_Home_win_rate_'+ str(num_games): 0,
+            'Away_when_Home_draw_rate_'+ str(num_games): 0,
+            'Away_when_Home_loss_rate_'+ str(num_games): 0,
+            'Away_when_Home_shots_per_game_'+ str(num_games): 0,
+            'Away_when_Home_shots_on_target_per_game_'+ str(num_games): 0,
+            'Away_when_Home_shots_conceded_per_game_'+ str(num_games): 0,
+            'Away_when_Home_shots_on_target_conceded_per_game_'+ str(num_games): 0,
+            'Away_when_Away_average_goals_scored_'+ str(num_games): 0,
+            'Away_when_Away_average_goals_conceded_'+ str(num_games): 0,
+            'Away_when_Away_average_goal_difference_'+ str(num_games): 0,
+            'Away_when_Away_win_rate_'+ str(num_games): 0,
+            'Away_when_Away_draw_rate_'+ str(num_games): 0,
+            'Away_when_Away_loss_rate_'+ str(num_games): 0,
+            'Away_when_Away_shots_per_game_'+ str(num_games): 0,
+            'Away_when_Away_shots_on_target_per_game_'+ str(num_games): 0,
+            'Away_when_Away_shots_conceded_per_game_'+ str(num_games): 0,
+            'Away_when_Away_shots_on_target_conceded_per_game_'+ str(num_games): 0,
+        }
+        
+
+        team_games = df[(df['HomeTeam'] == team) | (df['AwayTeam'] == team)].head(num_games)
+        num_games = len(team_games)
+        home_games = team_games[team_games['HomeTeam'] == team]
+        away_games = team_games[team_games['AwayTeam'] == team]
+        if num_games == 0:
+            num_games = 1
+        # Calculate average stats
+        team_stats[str(team_status)+'_average_goals_scored_'+ str(num_games)] = (home_games['FTHG'].sum() + away_games['FTAG'].sum()) / num_games
+        team_stats[str(team_status)+'_average_goals_conceded_'+ str(num_games)] = (home_games['FTAG'].sum() + away_games['FTHG'].sum()) / num_games
+        team_stats[str(team_status)+'_average_goal_difference_'+ str(num_games)] = team_stats[str(team_status)+'_average_goals_scored_'+ str(num_games)] - team_stats[str(team_status)+'_average_goals_conceded_'+ str(num_games)]
+        
+        # Win, draw, loss rate (home and away)
+        total_wins = len(home_games[home_games['FTR'] == 'H']) + len(away_games[away_games['FTR'] == 'A'])
+        total_draws = len(home_games[home_games['FTR'] == 'D']) + len(away_games[away_games['FTR'] == 'D'])
+        total_losses = len(home_games[home_games['FTR'] == 'A']) + len(away_games[away_games['FTR'] == 'H'])
+
+        team_stats[str(team_status)+'_win_rate_'+ str(num_games)] = total_wins / num_games
+        team_stats[str(team_status)+'_draw_rate_'+ str(num_games)] = total_draws / num_games
+        team_stats[str(team_status)+'_loss_rate_'+ str(num_games)] = total_losses / num_games
+        
+        # Shots stats
+        team_stats[str(team_status)+'_shots_per_game_'+ str(num_games)] = (home_games['HS'].sum() + away_games['AS'].sum()) / num_games
+        team_stats[str(team_status)+'_shots_on_target_per_game_'+ str(num_games)] = (home_games['HST'].sum() + away_games['AST'].sum()) / num_games
+        team_stats[str(team_status)+'_shots_conceded_per_game_'+ str(num_games)] = (home_games['AS'].sum() + away_games['HS'].sum()) / num_games
+        team_stats[str(team_status)+'_shots_on_target_conceded_per_game_'+ str(num_games)] = (home_games['AST'].sum() + away_games['HST'].sum()) / num_games
+        
+
+        # Home when Home stats
+        home_games = df[(df['HomeTeam'] == team)].head(num_games)
+
+        team_stats['Home_when_Home_average_goals_scored_'+ str(num_games)] = home_games['FTHG'].sum() / num_games
+        team_stats['Home_when_Home_average_goals_conceded_'+ str(num_games)] = home_games['FTAG'].sum() / num_games
+        team_stats['Home_when_Home_average_goal_difference_'+ str(num_games)] = team_stats['Home_when_Home_average_goals_scored_'+ str(num_games)] - team_stats['Home_when_Home_average_goals_conceded_'+ str(num_games)]
+
+        total_wins = len(home_games[home_games['FTR'] == 'H'])
+        total_draws = len(home_games[home_games['FTR'] == 'D'])
+        total_losses = len(home_games[home_games['FTR'] == 'A'])
+
+        team_stats['Home_when_Home_win_rate_'+ str(num_games)] = total_wins / num_games
+        team_stats['Home_when_Home_draw_rate_'+ str(num_games)] = total_draws / num_games
+        team_stats['Home_when_Home_loss_rate_'+ str(num_games)] = total_losses / num_games
+        team_stats['Home_when_Home_shots_per_game_'+ str(num_games)] = home_games['HS'].sum() / num_games
+        team_stats['Home_when_Home_shots_on_target_per_game_'+ str(num_games)] = home_games['HST'].sum() / num_games
+        team_stats['Home_when_Home_shots_conceded_per_game_'+ str(num_games)] = home_games['AS'].sum() / num_games
+        team_stats['Home_when_Home_shots_on_target_conceded_per_game_'+ str(num_games)] = home_games['AST'].sum() / num_games
+
+
+        # Home when Away stats
+
+        away_games = df[(df['AwayTeam'] == team)].head(num_games)
+
+        team_stats['Home_when_Away_average_goals_scored_'+ str(num_games)] = away_games['FTAG'].sum() / num_games
+        team_stats['Home_when_Away_average_goals_conceded_'+ str(num_games)] = away_games['FTHG'].sum() / num_games
+        team_stats['Home_when_Away_average_goal_difference_'+ str(num_games)] = team_stats['Home_when_Away_average_goals_scored_'+ str(num_games)] - team_stats['Home_when_Away_average_goals_conceded_'+ str(num_games)]
+
+        total_wins = len(away_games[away_games['FTR'] == 'A'])
+        total_draws = len(away_games[away_games['FTR'] == 'D'])
+        total_losses = len(away_games[away_games['FTR'] == 'H'])
+
+        team_stats['Home_when_Away_win_rate_'+ str(num_games)] = total_wins / num_games
+        team_stats['Home_when_Away_draw_rate_'+ str(num_games)] = total_draws / num_games
+        team_stats['Home_when_Away_loss_rate_'+ str(num_games)] = total_losses / num_games
+        team_stats['Home_when_Away_shots_per_game_'+ str(num_games)] = away_games['AS'].sum() / num_games
+        team_stats['Home_when_Away_shots_on_target_per_game_'+ str(num_games)] = away_games['AST'].sum() / num_games
+        team_stats['Home_when_Away_shots_conceded_per_game_'+ str(num_games)] = away_games['HS'].sum() / num_games
+        team_stats['Home_when_Away_shots_on_target_conceded_per_game_'+ str(num_games)] = away_games['HST'].sum() / num_games
+
+        # Away when Home stats
+
+        home_games = df[(df['HomeTeam'] == team)].head(num_games)
+
+        team_stats['Away_when_Home_average_goals_scored_'+ str(num_games)] = home_games['FTAG'].sum() / num_games
+        team_stats['Away_when_Home_average_goals_conceded_'+ str(num_games)] = home_games['FTHG'].sum() / num_games
+        team_stats['Away_when_Home_average_goal_difference_'+ str(num_games)] = team_stats['Away_when_Home_average_goals_scored_'+ str(num_games)] - team_stats['Away_when_Home_average_goals_conceded_'+ str(num_games)]
+
+        total_wins = len(home_games[home_games['FTR'] == 'A'])
+        total_draws = len(home_games[home_games['FTR'] == 'D'])
+        total_losses = len(home_games[home_games['FTR'] == 'H'])
+
+        team_stats['Away_when_Home_win_rate_'+ str(num_games)] = total_wins / num_games
+        team_stats['Away_when_Home_draw_rate_'+ str(num_games)] = total_draws / num_games
+        team_stats['Away_when_Home_loss_rate_'+ str(num_games)] = total_losses / num_games
+        team_stats['Away_when_Home_shots_per_game_'+ str(num_games)] = home_games['AS'].sum() / num_games
+        team_stats['Away_when_Home_shots_on_target_per_game_'+ str(num_games)] = home_games['AST'].sum() / num_games
+        team_stats['Away_when_Home_shots_conceded_per_game_'+ str(num_games)] = home_games['HS'].sum() / num_games
+        team_stats['Away_when_Home_shots_on_target_conceded_per_game_'+ str(num_games)] = home_games['HST'].sum() / num_games
+
+        # Away when Away stats
+
+        away_games = df[(df['AwayTeam'] == team)].head(num_games)
+
+        team_stats['Away_when_Away_average_goals_scored_'+ str(num_games)] = away_games['FTAG'].sum() / num_games
+        team_stats['Away_when_Away_average_goals_conceded_'+ str(num_games)] = away_games['FTHG'].sum() / num_games
+        team_stats['Away_when_Away_average_goal_difference_'+ str(num_games)] = team_stats['Away_when_Away_average_goals_scored_'+ str(num_games)] - team_stats['Away_when_Away_average_goals_conceded_'+ str(num_games)]
+
+        total_wins = len(away_games[away_games['FTR'] == 'A'])
+        total_draws = len(away_games[away_games['FTR'] == 'D'])
+        total_losses = len(away_games[away_games['FTR'] == 'H'])
+
+        team_stats['Away_when_Away_win_rate_'+ str(num_games)] = total_wins / num_games
+        team_stats['Away_when_Away_draw_rate_'+ str(num_games)] = total_draws / num_games
+        team_stats['Away_when_Away_loss_rate_'+ str(num_games)] = total_losses / num_games
+        team_stats['Away_when_Away_shots_per_game_'+ str(num_games)] = away_games['AS'].sum() / num_games
+        team_stats['Away_when_Away_shots_on_target_per_game_'+ str(num_games)] = away_games['AST'].sum() / num_games
+        team_stats['Away_when_Away_shots_conceded_per_game_'+ str(num_games)] = away_games['HS'].sum() / num_games
+        team_stats['Away_when_Away_shots_on_target_conceded_per_game_'+ str(num_games)] = away_games['HST'].sum() / num_games
+
+    
+    return team_stats, min(len(home_games), len(away_games))
+
+
+
+df = pd.read_csv('data/cleaned_dataset.csv')
+
+
+
+rows = []
+for i in range(len(df)):
+    home_team = df.iloc[i].HomeTeam
+    away_team = df.iloc[i].AwayTeam
+    ftr_H = df.iloc[i].FTR_H
+    ftr_A = df.iloc[i].FTR_A
+    ftr_D = df.iloc[i].FTR_D
+
+    
+
+    Home_stats_5,num_games5 = get_stats(df.iloc[i+1:], [home_team], 'home', 5)
+    Away_stats_5, num_games5= get_stats(df.iloc[i+1:], [away_team], 'away', 5)
+    Home_stats_10, num_games10 = get_stats(df.iloc[i+1:], [home_team], 'home', 10) 
+    Away_stats_10,num_games10 = get_stats(df.iloc[i+1:], [away_team], 'away', 10)
+    Home_stats_20,num_games20 = get_stats(df.iloc[i+1:], [home_team], 'home', 20)
+    Away_stats_20,num_games20 = get_stats(df.iloc[i+1:], [away_team], 'away', 20)
+
+    
+    # Create a dictionary to store the stats for the current row
+    row_stats = {
+        'HomeTeam': home_team,
+        'AwayTeam': away_team,
+        'FTR_H': ftr_H,
+        'FTR_A': ftr_A,
+        'FTR_D': ftr_D,
+
+        'home_average_goals_scored_5': Home_stats_5['home_average_goals_scored_5'],
+        'home_average_goals_conceded_5': Home_stats_5['home_average_goals_conceded_5'],
+        'home_average_goal_difference_5': Home_stats_5['home_average_goal_difference_5'],
+        'home_win_rate_5': Home_stats_5['home_win_rate_5'],
+        'home_draw_rate_5': Home_stats_5['home_draw_rate_5'],
+        'home_loss_rate_5': Home_stats_5['home_loss_rate_5'],
+        'home_shots_per_game_5': Home_stats_5['home_shots_per_game_5'],
+        'home_shots_on_target_per_game_5': Home_stats_5['home_shots_on_target_per_game_5'],
+        'home_shots_conceded_per_game_5': Home_stats_5['home_shots_conceded_per_game_5'],
+        'home_shots_on_target_conceded_per_game_5': Home_stats_5['home_shots_on_target_conceded_per_game_5'],
+        'away_average_goals_scored_5': Away_stats_5['away_average_goals_scored_5'],
+        'away_average_goals_conceded_5': Away_stats_5['away_average_goals_conceded_5'],
+        'away_average_goal_difference_5': Away_stats_5['away_average_goal_difference_5'],
+        'away_win_rate_5': Away_stats_5['away_win_rate_5'],
+        'away_draw_rate_5': Away_stats_5['away_draw_rate_5'],
+        'away_loss_rate_5': Away_stats_5['away_loss_rate_5'],
+        'away_shots_per_game_5': Away_stats_5['away_shots_per_game_5'],
+        'away_shots_on_target_per_game_5': Away_stats_5['away_shots_on_target_per_game_5'],
+        'away_shots_conceded_per_game_5': Away_stats_5['away_shots_conceded_per_game_5'],
+        'away_shots_on_target_conceded_per_game_5': Away_stats_5['away_shots_on_target_conceded_per_game_5'],
+        'Home-Away form difference_5': Home_stats_5['home_average_goals_scored_5'] - Away_stats_5['away_average_goals_scored_5'],
+        'Home_when_Home_average_goals_scored_5': Home_stats_5['Home_when_Home_average_goals_scored_5'],
+        'Home_when_Home_average_goals_conceded_5': Home_stats_5['Home_when_Home_average_goals_conceded_5'],
+        'Home_when_Home_average_goal_difference_5': Home_stats_5['Home_when_Home_average_goal_difference_5'],
+        'Home_when_Home_win_rate_5': Home_stats_5['Home_when_Home_win_rate_5'],
+        'Home_when_Home_draw_rate_5': Home_stats_5['Home_when_Home_draw_rate_5'],
+        'Home_when_Home_loss_rate_5': Home_stats_5['Home_when_Home_loss_rate_5'],
+        'Home_when_Home_shots_per_game_5': Home_stats_5['Home_when_Home_shots_per_game_5'],
+        'Home_when_Home_shots_on_target_per_game_5': Home_stats_5['Home_when_Home_shots_on_target_per_game_5'],
+        'Home_when_Home_shots_conceded_per_game_5': Home_stats_5['Home_when_Home_shots_conceded_per_game_5'],
+        'Home_when_Home_shots_on_target_conceded_per_game_5': Home_stats_5['Home_when_Home_shots_on_target_conceded_per_game_5'],
+        'Home_when_Away_average_goals_scored_5': Home_stats_5['Home_when_Away_average_goals_scored_5'],
+        'Home_when_Away_average_goals_conceded_5': Home_stats_5['Home_when_Away_average_goals_conceded_5'],
+        'Home_when_Away_average_goal_difference_5': Home_stats_5['Home_when_Away_average_goal_difference_5'],
+        'Home_when_Away_win_rate_5': Home_stats_5['Home_when_Away_win_rate_5'],
+        'Home_when_Away_draw_rate_5': Home_stats_5['Home_when_Away_draw_rate_5'],
+        'Home_when_Away_loss_rate_5': Home_stats_5['Home_when_Away_loss_rate_5'],
+        'Home_when_Away_shots_per_game_5': Home_stats_5['Home_when_Away_shots_per_game_5'],
+        'Home_when_Away_shots_on_target_per_game_5': Home_stats_5['Home_when_Away_shots_on_target_per_game_5'],
+        'Home_when_Away_shots_conceded_per_game_5': Home_stats_5['Home_when_Away_shots_conceded_per_game_5'],
+        'Home_when_Away_shots_on_target_conceded_per_game_5': Home_stats_5['Home_when_Away_shots_on_target_conceded_per_game_5'],
+        'Away_when_Home_average_goals_scored_5': Away_stats_5['Away_when_Home_average_goals_scored_5'],
+        'Away_when_Home_average_goals_conceded_5': Away_stats_5['Away_when_Home_average_goals_conceded_5'],
+        'Away_when_Home_average_goal_difference_5': Away_stats_5['Away_when_Home_average_goal_difference_5'],
+        'Away_when_Home_win_rate_5': Away_stats_5['Away_when_Home_win_rate_5'],
+        'Away_when_Home_draw_rate_5': Away_stats_5['Away_when_Home_draw_rate_5'],
+        'Away_when_Home_loss_rate_5': Away_stats_5['Away_when_Home_loss_rate_5'],
+        'Away_when_Home_shots_per_game_5': Away_stats_5['Away_when_Home_shots_per_game_5'],
+        'Away_when_Home_shots_on_target_per_game_5': Away_stats_5['Away_when_Home_shots_on_target_per_game_5'],
+        'Away_when_Home_shots_conceded_per_game_5': Away_stats_5['Away_when_Home_shots_conceded_per_game_5'],
+        'Away_when_Home_shots_on_target_conceded_per_game_5': Away_stats_5['Away_when_Home_shots_on_target_conceded_per_game_5'],
+        'Away_when_Away_average_goals_scored_5': Away_stats_5['Away_when_Away_average_goals_scored_5'],
+        'Away_when_Away_average_goals_conceded_5': Away_stats_5['Away_when_Away_average_goals_conceded_5'],
+        'Away_when_Away_average_goal_difference_5': Away_stats_5['Away_when_Away_average_goal_difference_5'],
+        'Away_when_Away_win_rate_5': Away_stats_5['Away_when_Away_win_rate_5'],
+        'Away_when_Away_draw_rate_5': Away_stats_5['Away_when_Away_draw_rate_5'],
+        'Away_when_Away_loss_rate_5': Away_stats_5['Away_when_Away_loss_rate_5'],
+        'Away_when_Away_shots_per_game_5': Away_stats_5['Away_when_Away_shots_per_game_5'],
+        'Away_when_Away_shots_on_target_per_game_5': Away_stats_5['Away_when_Away_shots_on_target_per_game_5'],
+        'Away_when_Away_shots_conceded_per_game_5': Away_stats_5['Away_when_Away_shots_conceded_per_game_5'],
+        'Away_when_Away_shots_on_target_conceded_per_game_5': Away_stats_5['Away_when_Away_shots_on_target_conceded_per_game_5'],
+        'home_average_goals_scored_10': Home_stats_10['home_average_goals_scored_10'],
+        'home_average_goals_conceded_10': Home_stats_10['home_average_goals_conceded_10'],
+        'home_average_goal_difference_10': Home_stats_10['home_average_goal_difference_10'],
+        'home_win_rate_10': Home_stats_10['home_win_rate_10'],
+        'home_draw_rate_10': Home_stats_10['home_draw_rate_10'],
+        'home_loss_rate_10': Home_stats_10['home_loss_rate_10'],
+        'home_shots_per_game_10': Home_stats_10['home_shots_per_game_10'],
+        'home_shots_on_target_per_game_10': Home_stats_10['home_shots_on_target_per_game_10'],
+        'home_shots_conceded_per_game_10': Home_stats_10['home_shots_conceded_per_game_10'],
+        'home_shots_on_target_conceded_per_game_10': Home_stats_10['home_shots_on_target_conceded_per_game_10'],
+        'away_average_goals_scored_10': Away_stats_10['away_average_goals_scored_10'],
+        'away_average_goals_conceded_10': Away_stats_10['away_average_goals_conceded_10'],
+        'away_average_goal_difference_10': Away_stats_10['away_average_goal_difference_10'],
+        'away_win_rate_10': Away_stats_10['away_win_rate_10'],
+        'away_draw_rate_10': Away_stats_10['away_draw_rate_10'],
+        'away_loss_rate_10': Away_stats_10['away_loss_rate_10'],
+        'away_shots_per_game_10': Away_stats_10['away_shots_per_game_10'],
+        'away_shots_on_target_per_game_10': Away_stats_10['away_shots_on_target_per_game_10'],
+        'away_shots_conceded_per_game_10': Away_stats_10['away_shots_conceded_per_game_10'],
+        'away_shots_on_target_conceded_per_game_10': Away_stats_10['away_shots_on_target_conceded_per_game_10'],
+        'Home-Away form difference_10': Home_stats_10['home_average_goals_scored_10'] - Away_stats_10['away_average_goals_scored_10'],
+        'Home_when_Home_average_goals_scored_10': Home_stats_10['Home_when_Home_average_goals_scored_10'],
+        'Home_when_Home_average_goals_conceded_10': Home_stats_10['Home_when_Home_average_goals_conceded_10'],
+        'Home_when_Home_average_goal_difference_10': Home_stats_10['Home_when_Home_average_goal_difference_10'],
+        'Home_when_Home_win_rate_10': Home_stats_10['Home_when_Home_win_rate_10'],
+        'Home_when_Home_draw_rate_10': Home_stats_10['Home_when_Home_draw_rate_10'],
+        'Home_when_Home_loss_rate_10': Home_stats_10['Home_when_Home_loss_rate_10'],
+        'Home_when_Home_shots_per_game_10': Home_stats_10['Home_when_Home_shots_per_game_10'],
+        'Home_when_Home_shots_on_target_per_game_10': Home_stats_10['Home_when_Home_shots_on_target_per_game_10'],
+        'Home_when_Home_shots_conceded_per_game_10': Home_stats_10['Home_when_Home_shots_conceded_per_game_10'],
+        'Home_when_Home_shots_on_target_conceded_per_game_10': Home_stats_10['Home_when_Home_shots_on_target_conceded_per_game_10'],
+        'Home_when_Away_average_goals_scored_10': Home_stats_10['Home_when_Away_average_goals_scored_10'],
+        'Home_when_Away_average_goals_conceded_10': Home_stats_10['Home_when_Away_average_goals_conceded_10'],
+        'Home_when_Away_average_goal_difference_10': Home_stats_10['Home_when_Away_average_goal_difference_10'],
+        'Home_when_Away_win_rate_10': Home_stats_10['Home_when_Away_win_rate_10'],
+        'Home_when_Away_draw_rate_10': Home_stats_10['Home_when_Away_draw_rate_10'],
+        'Home_when_Away_loss_rate_10': Home_stats_10['Home_when_Away_loss_rate_10'],
+        'Home_when_Away_shots_per_game_10': Home_stats_10['Home_when_Away_shots_per_game_10'],
+        'Home_when_Away_shots_on_target_per_game_10': Home_stats_10['Home_when_Away_shots_on_target_per_game_10'],
+        'Home_when_Away_shots_conceded_per_game_10': Home_stats_10['Home_when_Away_shots_conceded_per_game_10'],
+        'Home_when_Away_shots_on_target_conceded_per_game_10': Home_stats_10['Home_when_Away_shots_on_target_conceded_per_game_10'],
+        'Away_when_Home_average_goals_scored_10': Away_stats_10['Away_when_Home_average_goals_scored_10'],
+        'Away_when_Home_average_goals_conceded_10': Away_stats_10['Away_when_Home_average_goals_conceded_10'],
+        'Away_when_Home_average_goal_difference_10': Away_stats_10['Away_when_Home_average_goal_difference_10'],
+        'Away_when_Home_win_rate_10': Away_stats_10['Away_when_Home_win_rate_10'],
+        'Away_when_Home_draw_rate_10': Away_stats_10['Away_when_Home_draw_rate_10'],
+        'Away_when_Home_loss_rate_10': Away_stats_10['Away_when_Home_loss_rate_10'],
+        'Away_when_Home_shots_per_game_10': Away_stats_10['Away_when_Home_shots_per_game_10'],
+        'Away_when_Home_shots_on_target_per_game_10': Away_stats_10['Away_when_Home_shots_on_target_per_game_10'],
+        'Away_when_Home_shots_conceded_per_game_10': Away_stats_10['Away_when_Home_shots_conceded_per_game_10'],
+        'Away_when_Home_shots_on_target_conceded_per_game_10': Away_stats_10['Away_when_Home_shots_on_target_conceded_per_game_10'],
+        'Away_when_Away_average_goals_scored_10': Away_stats_10['Away_when_Away_average_goals_scored_10'],
+        'Away_when_Away_average_goals_conceded_10': Away_stats_10['Away_when_Away_average_goals_conceded_10'],
+        'Away_when_Away_average_goal_difference_10': Away_stats_10['Away_when_Away_average_goal_difference_10'],
+        'Away_when_Away_win_rate_10': Away_stats_10['Away_when_Away_win_rate_10'],
+        'Away_when_Away_draw_rate_10': Away_stats_10['Away_when_Away_draw_rate_10'],
+        'Away_when_Away_loss_rate_10': Away_stats_10['Away_when_Away_loss_rate_10'],
+        'Away_when_Away_shots_per_game_10': Away_stats_10['Away_when_Away_shots_per_game_10'],
+        'Away_when_Away_shots_on_target_per_game_10': Away_stats_10['Away_when_Away_shots_on_target_per_game_10'],
+        'Away_when_Away_shots_conceded_per_game_10': Away_stats_10['Away_when_Away_shots_conceded_per_game_10'],
+        'Away_when_Away_shots_on_target_conceded_per_game_10': Away_stats_10['Away_when_Away_shots_on_target_conceded_per_game_10'],
+        'home_average_goals_scored_20': Home_stats_20['home_average_goals_scored_20'],
+        'home_average_goals_conceded_20': Home_stats_20['home_average_goals_conceded_20'],
+        'home_average_goal_difference_20': Home_stats_20['home_average_goal_difference_20'],
+        'home_win_rate_20': Home_stats_20['home_win_rate_20'],
+        'home_draw_rate_20': Home_stats_20['home_draw_rate_20'],
+        'home_loss_rate_20': Home_stats_20['home_loss_rate_20'],
+        'home_shots_per_game_20': Home_stats_20['home_shots_per_game_20'],
+        'home_shots_on_target_per_game_20': Home_stats_20['home_shots_on_target_per_game_20'],
+        'home_shots_conceded_per_game_20': Home_stats_20['home_shots_conceded_per_game_20'],
+        'home_shots_on_target_conceded_per_game_20': Home_stats_20['home_shots_on_target_conceded_per_game_20'],
+        'away_average_goals_scored_20': Away_stats_20['away_average_goals_scored_20'],
+        'away_average_goals_conceded_20': Away_stats_20['away_average_goals_conceded_20'],
+        'away_average_goal_difference_20': Away_stats_20['away_average_goal_difference_20'],
+        'away_win_rate_20': Away_stats_20['away_win_rate_20'],
+        'away_draw_rate_20': Away_stats_20['away_draw_rate_20'],
+        'away_loss_rate_20': Away_stats_20['away_loss_rate_20'],
+        'away_shots_per_game_20': Away_stats_20['away_shots_per_game_20'],
+        'away_shots_on_target_per_game_20': Away_stats_20['away_shots_on_target_per_game_20'],
+        'away_shots_conceded_per_game_20': Away_stats_20['away_shots_conceded_per_game_20'],
+        'away_shots_on_target_conceded_per_game_20': Away_stats_20['away_shots_on_target_conceded_per_game_20'],
+        'Home-Away form difference_20': Home_stats_20['home_average_goals_scored_20'] - Away_stats_20['away_average_goals_scored_20'],
+        'Home_when_Home_average_goals_scored_20': Home_stats_20['Home_when_Home_average_goals_scored_20'],
+        'Home_when_Home_average_goals_conceded_20': Home_stats_20['Home_when_Home_average_goals_conceded_20'],
+        'Home_when_Home_average_goal_difference_20': Home_stats_20['Home_when_Home_average_goal_difference_20'],
+        'Home_when_Home_win_rate_20': Home_stats_20['Home_when_Home_win_rate_20'],
+        'Home_when_Home_draw_rate_20': Home_stats_20['Home_when_Home_draw_rate_20'],
+        'Home_when_Home_loss_rate_20': Home_stats_20['Home_when_Home_loss_rate_20'],
+        'Home_when_Home_shots_per_game_20': Home_stats_20['Home_when_Home_shots_per_game_20'],
+        'Home_when_Home_shots_on_target_per_game_20': Home_stats_20['Home_when_Home_shots_on_target_per_game_20'],
+        'Home_when_Home_shots_conceded_per_game_20': Home_stats_20['Home_when_Home_shots_conceded_per_game_20'],
+        'Home_when_Home_shots_on_target_conceded_per_game_20': Home_stats_20['Home_when_Home_shots_on_target_conceded_per_game_20'],
+        'Home_when_Away_average_goals_scored_20': Home_stats_20['Home_when_Away_average_goals_scored_20'],
+        'Home_when_Away_average_goals_conceded_20': Home_stats_20['Home_when_Away_average_goals_conceded_20'],
+        'Home_when_Away_average_goal_difference_20': Home_stats_20['Home_when_Away_average_goal_difference_20'],
+        'Home_when_Away_win_rate_20': Home_stats_20['Home_when_Away_win_rate_20'],
+        'Home_when_Away_draw_rate_20': Home_stats_20['Home_when_Away_draw_rate_20'],
+        'Home_when_Away_loss_rate_20': Home_stats_20['Home_when_Away_loss_rate_20'],
+        'Home_when_Away_shots_per_game_20': Home_stats_20['Home_when_Away_shots_per_game_20'],
+        'Home_when_Away_shots_on_target_per_game_20': Home_stats_20['Home_when_Away_shots_on_target_per_game_20'],
+        'Home_when_Away_shots_conceded_per_game_20': Home_stats_20['Home_when_Away_shots_conceded_per_game_20'],
+        'Home_when_Away_shots_on_target_conceded_per_game_20': Home_stats_20['Home_when_Away_shots_on_target_conceded_per_game_20'],
+        'Away_when_Home_average_goals_scored_20': Away_stats_20['Away_when_Home_average_goals_scored_20'],
+        'Away_when_Home_average_goals_conceded_20': Away_stats_20['Away_when_Home_average_goals_conceded_20'],
+        'Away_when_Home_average_goal_difference_20': Away_stats_20['Away_when_Home_average_goal_difference_20'],
+        'Away_when_Home_win_rate_20': Away_stats_20['Away_when_Home_win_rate_20'],
+        'Away_when_Home_draw_rate_20': Away_stats_20['Away_when_Home_draw_rate_20'],
+        'Away_when_Home_loss_rate_20': Away_stats_20['Away_when_Home_loss_rate_20'],
+        'Away_when_Home_shots_per_game_20': Away_stats_20['Away_when_Home_shots_per_game_20'],
+        'Away_when_Home_shots_on_target_per_game_20': Away_stats_20['Away_when_Home_shots_on_target_per_game_20'],
+        'Away_when_Home_shots_conceded_per_game_20': Away_stats_20['Away_when_Home_shots_conceded_per_game_20'],
+        'Away_when_Home_shots_on_target_conceded_per_game_20': Away_stats_20['Away_when_Home_shots_on_target_conceded_per_game_20'],
+        'Away_when_Away_average_goals_scored_20': Away_stats_20['Away_when_Away_average_goals_scored_20'],
+        'Away_when_Away_average_goals_conceded_20': Away_stats_20['Away_when_Away_average_goals_conceded_20'],
+        'Away_when_Away_average_goal_difference_20': Away_stats_20['Away_when_Away_average_goal_difference_20'],
+        'Away_when_Away_win_rate_20': Away_stats_20['Away_when_Away_win_rate_20'],
+        'Away_when_Away_draw_rate_20': Away_stats_20['Away_when_Away_draw_rate_20'],
+        'Away_when_Away_loss_rate_20': Away_stats_20['Away_when_Away_loss_rate_20'],
+        'Away_when_Away_shots_per_game_20': Away_stats_20['Away_when_Away_shots_per_game_20'],
+        'Away_when_Away_shots_on_target_per_game_20': Away_stats_20['Away_when_Away_shots_on_target_per_game_20'],
+        'Away_when_Away_shots_conceded_per_game_20': Away_stats_20['Away_when_Away_shots_conceded_per_game_20'],
+        'Away_when_Away_shots_on_target_conceded_per_game_20': Away_stats_20['Away_when_Away_shots_on_target_conceded_per_game_20'],
+}
+    if num_games10 == 10:
+        rows.append(row_stats)
+
+new_df = pd.DataFrame(rows)
+
+print(new_df.head())
+new_df.to_csv('data/final_stats.csv', index=False)
+
+
+
+
