@@ -16,14 +16,11 @@ df =df.drop(['Div','Date','Time','B365H','B365D','B365A','BWH','BWD','BWA','WHH'
          'MaxCD', 'MaxCA', 'AvgCH', 'AvgCD', 'AvgCA', 'B365C>2.5', 'B365C<2.5', 
          'PC>2.5', 'PC<2.5', 'MaxC>2.5', 'MaxC<2.5', 'AvgC>2.5', 'AvgC<2.5', 'AHCh',
             'B365CAHH', 'B365CAHA', 'PCAHH', 'PCAHA', 'MaxCAHH', 'MaxCAHA', 'AvgCAHH',
-            'AvgCAHA', 'P>2.5', 'Avg>2.5', 'Avg<2.5'], axis=1)
+            'AvgCAHA', 'P>2.5', 'Avg>2.5', 'Avg<2.5','HTHG','HTAG','HS','AS','HST',
+            'AST','HF','AF','HC','AC','HY','AY','HR','AR','PSH','PSD','PSA','AvgH',
+            'AvgD','AvgA','P<2.5'], axis=1)
 
 df.dropna(inplace=True)
-
-# Use OneHotEncoder to create boolean columns of FTR column
-ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False).set_output(transform="pandas")
-ohetransform = ohe.fit_transform(df[['FTR']])
-df = pd.concat([df,ohetransform],axis=1)
 
 
 df.to_csv('data/cleaned_dataset.csv', index=False)
