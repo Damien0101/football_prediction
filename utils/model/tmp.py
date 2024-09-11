@@ -15,7 +15,7 @@ ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False).set_output(tra
 ohetransform = ohe.fit_transform(df[['HomeTeam', 'AwayTeam']])
 df = pd.concat([df, ohetransform], axis=1).drop(columns=['HomeTeam', 'AwayTeam'])
 
-with open('onehot_encoder.pkl', 'wb') as file:
+with open('utils/model/onehot_encoder.pkl', 'wb') as file:
     pickle.dump(ohe, file)
 
 # Define features and target
@@ -31,7 +31,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = LogisticRegression()
 model.fit(X_train, y_train)
 
-with open('logistic_regression_model.pkl', 'wb') as file:
+with open('utils/model/logistic_regression_model.pkl', 'wb') as file:
     pickle.dump(model, file)
     
 y_pred = model.predict(X_test)
