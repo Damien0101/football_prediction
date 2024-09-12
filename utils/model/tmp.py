@@ -9,6 +9,7 @@ import pickle
 
 # Load the data
 df = pd.read_csv('data/final_stats.csv')
+matches = df[['HomeTeam', 'AwayTeam']]
 
 # Perform one-hot encoding on categorical features
 ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False).set_output(transform="pandas")
@@ -29,16 +30,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 
 model = LogisticRegression()
+
 model.fit(X_train, y_train)
 
 with open('utils/model/logistic_regression_model.pkl', 'wb') as file:
     pickle.dump(model, file)
     
 y_pred = model.predict(X_test)
+y_pred_df = pd.DataFrame(y_pred, columns=['FTR'])
 accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy: ", accuracy)
+
 
 probabilities = model.predict_proba(X_test)
 probabilities_df = pd.DataFrame(probabilities, columns=model.classes_)
-print(probabilities_df.head(25))
 
+
+
+results = pd.concat([probabilities_df, y_pred_df], axis=1)
+merged_results = pd.merge(matches, results, left_index=True, right_index=True)
+print(merged_results.head(25))
