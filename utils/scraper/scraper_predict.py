@@ -17,6 +17,8 @@ def process_matches(match_links):
     clean_matches = [i.split('/') for i in match_links if i]
     matches = [i for i in clean_matches if i != ['-']]
     day = [i[0] for i in matches]
+    day = [int(item.split('-')[1]) for item in day]
+
     team_a = [i[1] for i in matches]
     team_b = [i[2] for i in matches]
     return day, team_a, team_b
