@@ -1,10 +1,10 @@
 import pandas as pd
 import sqlite3
 
-conn = sqlite3.connect('data/database.db')
+conn = sqlite3.connect('/home/servietske/Desktop/Becode/football_prediction/data/database.db')
 cur = conn.cursor()
 
-df = pd.read_csv('data/2324_B1.csv')
+df = pd.read_csv('/home/servietske/Desktop/Becode/football_prediction/data/dataset.csv')
 
 for index, row in df.iterrows():
     match_id = index + 1
@@ -51,14 +51,12 @@ for index, row in df.iterrows():
     home_team_id = row['HomeTeam']
     away_team_id = row['AwayTeam']
     
-    cur.execute("INSERT INTO Matches (MatchID, Date, Time, HomeTeamID, AwayTeamID) VALUES (?, ?, ?, ?, ?)",
+    cur.execute("INSERT OR IGNORE INTO Matches (MatchID, Date, Time, HomeTeamID, AwayTeamID) VALUES (?, ?, ?, ?, ?)",
                 (match_id, date, time, home_team_id, away_team_id))
 
-'''
-team_names = list(set(df['HomeTeam'].unique() + df['AwayTeam'].unique()))    
+team_names = list(set(df['HomeTeam'].unique()))    
 
 for team_name in team_names:
     cur.execute("INSERT INTO Teams (TeamName) VALUES (?)", (team_name,))
-'''
 conn.commit()
 
