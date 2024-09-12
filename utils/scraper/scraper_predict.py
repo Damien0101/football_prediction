@@ -42,4 +42,4 @@ team_a_mapped = map_team_names(team_a, team_name_mapping)
 team_b_mapped = map_team_names(team_b, team_name_mapping)
 
 df = pd.DataFrame(data={"day": day, "HomeTeam": team_a_mapped, "AwayTeam": team_b_mapped})
-df.to_csv("data/matchstest.csv", sep=',', index=False)
+df.to_csv("data/matchs.csv", sep=',', index=False)
