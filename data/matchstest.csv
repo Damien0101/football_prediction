@@ -1,0 +1,195 @@
+day,HomeTeam,AwayTeam
+journee-5,Cercle Brugge,Gent
+journee-5,Anderlecht,Genk
+journee-7,Dender,Standard
+journee-7,Cercle Brugge,Genk
+journee-7,Kortrijk,Club Brugge
+journee-7,Anderlecht,Westerlo
+journee-7,Antwerp,St. Gilloise
+journee-7,St Truiden,Oud-Heverlee Leuven
+journee-7,Charleroi,Beerschot VA
+journee-7,Gent,Mechelen
+journee-8,Standard,St. Gilloise
+journee-8,Beerschot VA,St Truiden
+journee-8,Westerlo,Antwerp
+journee-8,Anderlecht,Charleroi
+journee-8,Club Brugge,Gent
+journee-8,Mechelen,Cercle Brugge
+journee-8,Genk,Dender
+journee-8,Oud-Heverlee Leuven,Kortrijk
+journee-9,Charleroi,Club Brugge
+journee-9,Genk,Mechelen
+journee-9,Standard,Westerlo
+journee-9,Dender,Anderlecht
+journee-9,Antwerp,Beerschot VA
+journee-9,St. Gilloise,Kortrijk
+journee-9,Gent,Oud-Heverlee Leuven
+journee-9,Cercle Brugge,St Truiden
+journee-10,Westerlo,Beerschot VA
+journee-10,Mechelen,Oud-Heverlee Leuven
+journee-10,Kortrijk,Genk
+journee-10,Dender,Charleroi
+journee-10,Anderlecht,Standard
+journee-10,Antwerp,Cercle Brugge
+journee-10,Club Brugge,St. Gilloise
+journee-10,St Truiden,Gent
+journee-11,Beerschot VA,Anderlecht
+journee-11,Westerlo,Club Brugge
+journee-11,Cercle Brugge,Dender
+journee-11,St. Gilloise,Gent
+journee-11,Genk,St Truiden
+journee-11,Oud-Heverlee Leuven,Antwerp
+journee-11,Standard,Charleroi
+journee-11,Mechelen,Kortrijk
+journee-12,Kortrijk,Beerschot VA
+journee-12,Charleroi,Oud-Heverlee Leuven
+journee-12,Dender,Mechelen
+journee-12,St Truiden,Westerlo
+journee-12,Club Brugge,Anderlecht
+journee-12,Antwerp,Standard
+journee-12,Gent,Genk
+journee-12,St. Gilloise,Cercle Brugge
+journee-13-,Westerlo,Dender
+journee-13-,Standard,St Truiden
+journee-13-,Oud-Heverlee Leuven,Club Brugge
+journee-13-,Mechelen,St. Gilloise
+journee-13-,Genk,Antwerp
+journee-13-,Cercle Brugge,Charleroi
+journee-13-,Anderlecht,Kortrijk
+journee-13-,Beerschot VA,Gent
+journee-14,St Truiden,Mechelen
+journee-14,Kortrijk,Antwerp
+journee-14,Dender,Oud-Heverlee Leuven
+journee-14,Charleroi,Westerlo
+journee-14,Cercle Brugge,Anderlecht
+journee-14,Gent,Standard
+journee-14,St. Gilloise,Genk
+journee-14,Beerschot VA,Club Brugge
+journee-15,Antwerp,Dender
+journee-15,Club Brugge,St Truiden
+journee-15,Standard,Cercle Brugge
+journee-15,Genk,Charleroi
+journee-15,Mechelen,Beerschot VA
+journee-15,Oud-Heverlee Leuven,St. Gilloise
+journee-15,Anderlecht,Gent
+journee-15,Westerlo,Kortrijk
+journee-16,Kortrijk,Mechelen
+journee-16,Club Brugge,Dender
+journee-16,Charleroi,Standard
+journee-16,St Truiden,Genk
+journee-16,Beerschot VA,Cercle Brugge
+journee-16,Oud-Heverlee Leuven,Anderlecht
+journee-16,St. Gilloise,Antwerp
+journee-16,Westerlo,Gent
+journee-17,Genk,Kortrijk
+journee-17,Mechelen,Club Brugge
+journee-17,Standard,Oud-Heverlee Leuven
+journee-17,Gent,St Truiden
+journee-17,Antwerp,Charleroi
+journee-17,Cercle Brugge,St. Gilloise
+journee-17,Anderlecht,Beerschot VA
+journee-17,Dender,Westerlo
+journee-18,Mechelen,Antwerp
+journee-18,Beerschot VA,Standard
+journee-18,Oud-Heverlee Leuven,Charleroi
+journee-18,Kortrijk,Dender
+journee-18,Club Brugge,Genk
+journee-18,St. Gilloise,Westerlo
+journee-18,St Truiden,Anderlecht
+journee-18,Gent,Cercle Brugge
+journee-19,Westerlo,Mechelen
+journee-19,Charleroi,St Truiden
+journee-19,Dender,Antwerp
+journee-19,Beerschot VA,Kortrijk
+journee-19,Standard,Gent
+journee-19,Genk,Anderlecht
+journee-19,St. Gilloise,Club Brugge
+journee-19,Cercle Brugge,Oud-Heverlee Leuven
+journee-20,Antwerp,Genk
+journee-20,Club Brugge,Westerlo
+journee-20,Kortrijk,Charleroi
+journee-20,Mechelen,Standard
+journee-20,Gent,St. Gilloise
+journee-20,Oud-Heverlee Leuven,Beerschot VA
+journee-20,St Truiden,Cercle Brugge
+journee-20,Anderlecht,Dender
+journee-21,Beerschot VA,Antwerp
+journee-21,Genk,Oud-Heverlee Leuven
+journee-21,Standard,Kortrijk
+journee-21,Westerlo,St Truiden
+journee-21,Charleroi,St. Gilloise
+journee-21,Cercle Brugge,Mechelen
+journee-21,Anderlecht,Club Brugge
+journee-21,Dender,Gent
+journee-22,Gent,Charleroi
+journee-22,Mechelen,Genk
+journee-22,Kortrijk,Anderlecht
+journee-22,Antwerp,Westerlo
+journee-22,Club Brugge,Beerschot VA
+journee-22,Dender,Cercle Brugge
+journee-22,St Truiden,Standard
+journee-22,St. Gilloise,Oud-Heverlee Leuven
+journee-23,Beerschot VA,St. Gilloise
+journee-23,Westerlo,Genk
+journee-23,Charleroi,Cercle Brugge
+journee-23,Oud-Heverlee Leuven,Gent
+journee-23,Club Brugge,Kortrijk
+journee-23,Standard,Dender
+journee-23,St Truiden,Antwerp
+journee-23,Anderlecht,Mechelen
+journee-24,Gent,Anderlecht
+journee-24,Genk,Beerschot VA
+journee-24,St. Gilloise,St Truiden
+journee-24,Kortrijk,Westerlo
+journee-24,Antwerp,Club Brugge
+journee-24,Cercle Brugge,Standard
+journee-24,Charleroi,Dender
+journee-24,Oud-Heverlee Leuven,Mechelen
+journee-25,Westerlo,Standard
+journee-25,Anderlecht,Antwerp
+journee-25,Dender,St Truiden
+journee-25,Club Brugge,Oud-Heverlee Leuven
+journee-25,Beerschot VA,Charleroi
+journee-25,Genk,Cercle Brugge
+journee-25,Kortrijk,St. Gilloise
+journee-25,Mechelen,Gent
+journee-26,Antwerp,Kortrijk
+journee-26,Gent,Beerschot VA
+journee-26,Oud-Heverlee Leuven,Dender
+journee-26,St Truiden,Club Brugge
+journee-26,Standard,Genk
+journee-26,Cercle Brugge,Westerlo
+journee-26,St. Gilloise,Mechelen
+journee-26,Charleroi,Anderlecht
+journee-27,Dender,Beerschot VA
+journee-27,Westerlo,Charleroi
+journee-27,Kortrijk,Cercle Brugge
+journee-27,Anderlecht,St. Gilloise
+journee-27,Antwerp,Oud-Heverlee Leuven
+journee-27,Genk,Gent
+journee-27,Club Brugge,Standard
+journee-27,Mechelen,St Truiden
+journee-28,St. Gilloise,Dender
+journee-28,Standard,Anderlecht
+journee-28,Beerschot VA,Mechelen
+journee-28,Charleroi,Genk
+journee-28,Cercle Brugge,Antwerp
+journee-28,Gent,Club Brugge
+journee-28,Oud-Heverlee Leuven,Westerlo
+journee-28,St Truiden,Kortrijk
+journee-29,Dender,Genk
+journee-29,Kortrijk,Oud-Heverlee Leuven
+journee-29,St Truiden,Beerschot VA
+journee-29,St. Gilloise,Standard
+journee-29,Westerlo,Anderlecht
+journee-29,Cercle Brugge,Club Brugge
+journee-29,Antwerp,Gent
+journee-29,Charleroi,Mechelen
+journee-30,Standard,Antwerp
+journee-30,Oud-Heverlee Leuven,St Truiden
+journee-30,Club Brugge,Charleroi
+journee-30,Beerschot VA,Westerlo
+journee-30,Anderlecht,Cercle Brugge
+journee-30,Genk,St. Gilloise
+journee-30,Gent,Kortrijk
+journee-30,Mechelen,Dender
