@@ -67,7 +67,7 @@ def get_stats(df, teams, team_status, num_games):
     return team_stats
 
 
-df = pd.read_csv('data/cleaned_dataset.csv')
+df = pd.read_csv('data/prepredict.csv')
 
 
 
@@ -130,4 +130,4 @@ for i in range(len(df)):
 
 new_df = pd.DataFrame(rows)
 print(new_df.head())
-new_df.to_csv('data/final_stats.csv', index=False)
+new_df.to_csv('data/averages_predict.csv', index=False)

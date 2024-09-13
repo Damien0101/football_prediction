@@ -27,13 +27,13 @@ def get_prediction_label(probabilities):
         return 'Away Win'
 
 def resize_image(image_path, size=(150, 150)):
-    # Check if the image file exists and is a file, not a directory
+
     if not os.path.isfile(image_path):
         raise FileNotFoundError(f"Image file not found or is a directory: {image_path}")
     
     try:
         with Image.open(image_path) as img:
-            # Resize image with the LANCZOS resampling filter
+
             img = img.resize(size, Image.Resampling.LANCZOS)
             buf = io.BytesIO()
             img.save(buf, format='PNG')
@@ -58,8 +58,8 @@ def get_image_path(team_name):
     return team_logo, placeholder_image_path
 
 
-df_stats = pd.read_csv('data/final_stats.csv')
-futures_matchs = pd.read_csv('data/matchs.csv')
+df_stats = pd.read_csv('data/averages_predict.csv')
+futures_matchs = pd.read_csv('data/future_matches.csv')
 
 def get_stats_for_future_matches(futures_matchs, df_stats):
     futures_stats = []
@@ -67,22 +67,21 @@ def get_stats_for_future_matches(futures_matchs, df_stats):
         home_team = row['HomeTeam']
         away_team = row['AwayTeam']
         
-        # Find stats where the home team is either Home or Away
+
         home_stats = df_stats[(df_stats['HomeTeam'] == home_team) | (df_stats['AwayTeam'] == home_team)]
         away_stats = df_stats[(df_stats['HomeTeam'] == away_team) | (df_stats['AwayTeam'] == away_team)]
 
-        # Check if we have any valid rows for both home and away stats
+
         if not home_stats.empty:
             home_stats_row = home_stats.iloc[0]
         else:
-            home_stats_row = pd.Series(dtype='float64')  # Empty series, will fill with defaults later
+            home_stats_row = pd.Series(dtype='float64')  
 
         if not away_stats.empty:
             away_stats_row = away_stats.iloc[0]
         else:
-            away_stats_row = pd.Series(dtype='float64')  # Empty series, will fill with defaults later
+            away_stats_row = pd.Series(dtype='float64')  
 
-        # Fallback logic to avoid missing values (fillna ensures missing values get defaulted to 0)
         row_stats = {
             'HomeTeam': home_team,
             'AwayTeam': away_team,
@@ -115,24 +114,24 @@ def get_stats_for_future_matches(futures_matchs, df_stats):
 
     return pd.DataFrame(futures_stats)
 
-# Load the model and encoder
+
 model = pickle.load(open('utils/model/logistic_regression_model.pkl', 'rb'))
 preprocessor = pickle.load(open('utils/model/onehot_encoder.pkl', 'rb'))
 
-# Get the stats for the future matches
+
 futures_stats = get_stats_for_future_matches(futures_matchs, df_stats)
 
-# Perform one-hot encoding on categorical features
+
 categorical_features = ['HomeTeam', 'AwayTeam']
 futures_stats_encoded = preprocessor.transform(futures_stats[categorical_features])
 futures_stats_encoded = pd.DataFrame(futures_stats_encoded, columns=preprocessor.get_feature_names_out(categorical_features))
 futures_stats = pd.concat([futures_stats.drop(columns=categorical_features), futures_stats_encoded], axis=1)
 
-# Make predictions
+
 probabilities = model.predict_proba(futures_stats)
 predictions = [get_prediction_label(prob) for prob in probabilities]
 
-# Display the predictions
+
 days = sorted(futures_matchs['day'].unique())
 select_day = st.selectbox('Select a day:', days)
 day_matches = futures_matchs[futures_matchs['day'] == select_day].reset_index(drop=True)
