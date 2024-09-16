@@ -12,7 +12,7 @@ pd.options.display.max_columns = 50
 st.set_page_config(page_title="Football Match Prediction", page_icon=":soccer:")
 
 button_html = """
-<a href="https://footballpredict.streamlit.app/" style="display: block; text-align: center; margin: 0 auto;">
+<a href="https://footballpredict.streamlit.app/" style="display: block; text-align: center; margin: 0 auto;" target="_self">
     <img src='https://upload.wikimedia.org/wikipedia/fr/7/7b/Jupiler_Pro_League.png' width='200' style='display: block; margin: 0 auto;'>
 </a>
 """
