@@ -5,7 +5,7 @@ import pickle
 # Set the page config
 st.set_page_config(
     page_title="Jupiler Pro League Dashboard", 
-    page_icon="🏆", 
+    page_icon="🐂", 
     layout="centered", 
     initial_sidebar_state="expanded")
 

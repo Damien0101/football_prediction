@@ -6,7 +6,7 @@ import pandas as pd
 st.set_page_config(page_title="Stats", page_icon=":graph:", layout="wide")
 
 button_html = """
-<a href="https://football-prediction.streamlit.app/" style="display: block; text-align: center; margin: 0 auto;">
+<a href="https://footballpredict.streamlit.app/" style="display: block; text-align: center; margin: 0 auto;" target="_self">
     <img src='https://upload.wikimedia.org/wikipedia/fr/7/7b/Jupiler_Pro_League.png' width='200' style='display: block; margin: 0 auto;'>
 </a>
 """
