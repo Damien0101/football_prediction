@@ -1,4 +1,4 @@
-#  football prediction ⚽🏆
+#  Football Prediction ⚽🏆
 
 
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
@@ -6,11 +6,12 @@
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white)
 
 ## 📜 Project Description
 #### The football match prediction project aims to predict results of Belgian Jupiler Pro League games using scraping, machine learning, and data visualization. Using SQL for data management, Airflow to automate data updates, and Streamlit for live visualizations, this project predicts match results, displays betting odds, and shows team stats. This helps football analysts and fans make informed predictions. ####
 
-[![N|Solid](football.png "vivino")](https://vivinoproject-iloveyouantoine.streamlit.app/)
+[![N|Solid](utils/images/football.png "vivino")](https://footballpredict.streamlit.app/)
 
 ***click on the image to make your first prediction...***
 
@@ -124,7 +125,7 @@ FOOTBALL_PREDICTION_PROJECT
    ```
       
     #### Or visit :
-    [football prediction app](https://vivinoproject-iloveyouantoine.streamlit.app/) 
+    [Football Prediction app](https://footballpredict.streamlit.app/) 
 
 ## 🎉 Have Fun!
 
