@@ -127,6 +127,15 @@ FOOTBALL_PREDICTION_PROJECT
     #### Or visit :
     [Football Prediction app](https://footballpredict.streamlit.app/) 
 
+## 🫂 Collaborators 
+[Ben Ozfirat](https://github.com/benozfirat) - Data Analyst
+
+[Volodymyr Vysotski](https://github.com/vvvladimir65) - Data Analyst
+
+[Ness Gira](https://github.com/ness015618) - Data Engineer
+
+[Damien Compere](https://github.com/servietsky0) - Data Engineer
+
 ## 🎉 Have Fun!
 
 #### *I hope you enjoy using my football prediction app as much as I enjoyed building it! Each prediction and stat brings us one step closer to understanding the game more deeply.* 🚀
