@@ -33,11 +33,11 @@ with col1:
         st.switch_page('pages/1_⚽_Matches.py')
 
 with col2:
-    if st.button('📊 Stats Leaderboard'):
+    if st.button('🏆 Stats Leaderboard'):
         st.switch_page('pages/2_🏆_Leaderboard.py')
 
 with col3:
-    if st.button('⚽ Complete Stats'):
+    if st.button('📈 Complete Stats'):
         st.switch_page('pages/3_📈_Complete_Stats.py')
 
 
