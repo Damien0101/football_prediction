@@ -13,7 +13,7 @@ st.set_page_config(
 st.markdown("<img src='https://upload.wikimedia.org/wikipedia/fr/7/7b/Jupiler_Pro_League.png' width='200' style='display: block; margin: 0 auto;'>" , unsafe_allow_html=True)
 
 # Main title
-st.title("Welcome to the JPL Dashboard 🏆")
+st.title("Welcome to the JPL Dashboard")
 
 # Subtitle
 st.subheader("Explore team stats and performance insights!")
@@ -52,7 +52,7 @@ st.markdown("""
 
 
 st.markdown("---")
-st.write("### Team Members 🏆")
+st.write("### Team Members 👨‍👨‍👦‍👦")
 st.write("""
          This project was developed by a team of 4 talented data enthusiasts:
 
