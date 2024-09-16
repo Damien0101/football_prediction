@@ -11,7 +11,13 @@ pd.options.display.max_columns = 50
 
 st.set_page_config(page_title="Football Match Prediction", page_icon=":soccer:")
 
+button_html = """
+<a href="http://localhost:8501" style="display: block; text-align: center; margin: 0 auto;">
+    <img src='https://upload.wikimedia.org/wikipedia/fr/7/7b/Jupiler_Pro_League.png' width='200' style='display: block; margin: 0 auto;'>
+</a>
+"""
 
+st.markdown(button_html, unsafe_allow_html=True)
 
 
 def get_prediction_label(probabilities):
@@ -132,9 +138,12 @@ probabilities = model.predict_proba(futures_stats)
 predictions = [get_prediction_label(prob) for prob in probabilities]
 
 
+st.markdown("<h1 style='text-align: center;'>Matches ⚽ </h1>", unsafe_allow_html=True)
+
 days = sorted(futures_matchs['day'].unique())
 select_day = st.selectbox('Select a day:', days)
 day_matches = futures_matchs[futures_matchs['day'] == select_day].reset_index(drop=True)
+
 
 st.header(f"Matches for Day {select_day}")
 
