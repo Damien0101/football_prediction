@@ -19,6 +19,8 @@ button_html = """
 
 st.markdown(button_html, unsafe_allow_html=True)
 
+def get_odds(probabilities):
+    return round(1 / probabilities, 2)
 
 def get_prediction_label(probabilities):
     home_win_prob = probabilities[0]
@@ -183,6 +185,15 @@ for index, row in day_matches.iterrows():
             else:
                 st.write("Image not available")
 
+        home_win_prob = probabilities[index][0]
+        draw_prob = probabilities[index][2]
+        away_win_prob = probabilities[index][1]
+
+        # Calculate odds
+        home_win_odds = get_odds(home_win_prob)
+        draw_odds = get_odds(draw_prob)
+        away_win_odds = get_odds(away_win_prob)
+
         fig = go.Figure(data=[
             go.Bar(
                 y=[''],
@@ -233,6 +244,15 @@ for index, row in day_matches.iterrows():
             'Draw': f"{probabilities[index][2]:.2f}",
             'Away Win': f"{probabilities[index][1]:.2f}",
             'Prediction': predictions[index]
+
+        }
+
+        odds = {
+            'Match': f"{row['HomeTeam']} vs {row['AwayTeam']}",
+            'Home Win': home_win_odds,
+            'Draw': draw_odds,
+            'Away Win': away_win_odds
         }
         
         st.write(pd.DataFrame([table]).set_index('Match'))
+        st.write(pd.DataFrame([odds]).set_index('Match'))
