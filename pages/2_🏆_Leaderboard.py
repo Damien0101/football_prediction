@@ -9,7 +9,7 @@ import plotly.express as px
 st.set_page_config(page_title="Leaderboard", page_icon="🏆")
 
 button_html = """
-<a href="http://localhost:8501" style="display: block; text-align: center; margin: 0 auto;">
+<a href="https://football-prediction.streamlit.app/" style="display: block; text-align: center; margin: 0 auto;">
     <img src='https://upload.wikimedia.org/wikipedia/fr/7/7b/Jupiler_Pro_League.png' width='200' style='display: block; margin: 0 auto;'>
 </a>
 """
