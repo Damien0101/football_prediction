@@ -1,0 +1,140 @@
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="schema">
+        <mxGraphModel dx="763" dy="338" grid="1" gridSize="7" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="teams" value="Teams" style="shape=table;startSize=30;container=1;collapsible=0;rounded=1;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="48" y="467" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="team1" value="TeamID (PK)" style="fontStyle=1" parent="teams" vertex="1">
+                    <mxGeometry y="30" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="team2" value="TeamName" style="fontStyle=1" parent="teams" vertex="1">
+                    <mxGeometry y="60" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="matches" value="Matches" style="shape=table;startSize=30;container=1;collapsible=0;swimlaneFillColor=none;rounded=1;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="322" y="280" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="match1" value="MatchID (PK)" style="fontStyle=1" parent="matches" vertex="1">
+                    <mxGeometry y="30" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="match2" value="Date" style="fontStyle=1;fontSize=13;" parent="matches" vertex="1">
+                    <mxGeometry y="60" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="match3" value="Time" style="fontStyle=1;fontSize=13;" parent="matches" vertex="1">
+                    <mxGeometry y="90" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="match4" value="HomeTeamID (FK)" style="fontStyle=1" parent="matches" vertex="1">
+                    <mxGeometry y="120" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="match5" value="AwayTeamID (FK)" style="fontStyle=1" parent="matches" vertex="1">
+                    <mxGeometry y="150" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stats" value="Stats" style="shape=table;startSize=30;container=1;collapsible=0;rounded=1;arcSize=18;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="581" y="392" width="220" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat1" value="StatID (PK)" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="30" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat2" value="MatchID (FK)" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="60" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat3" value="FTHG" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="90" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat4" value="FTAG" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="120" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat5" value="HS" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="150" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat6" value="AS" style="fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="180" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="stat7" value="HC" style="rounded=0;fontStyle=1" parent="stats" vertex="1">
+                    <mxGeometry y="210" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds" value="Odds" style="shape=table;startSize=30;container=1;collapsible=0;rounded=1;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="28" y="119" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds1" value="OddsID (PK)" style="fontStyle=1" parent="odds" vertex="1">
+                    <mxGeometry y="30" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds2" value="MatchID (FK)" style="fontStyle=1" parent="odds" vertex="1">
+                    <mxGeometry y="60" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds3" value="PSH" style="fontStyle=1" parent="odds" vertex="1">
+                    <mxGeometry y="90" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds4" value="PSD" style="fontStyle=1" parent="odds" vertex="1">
+                    <mxGeometry y="120" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="odds5" value="PSA" style="fontStyle=1" parent="odds" vertex="1">
+                    <mxGeometry y="150" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="results" value="Results" style="shape=table;startSize=30;container=1;collapsible=0;rounded=1;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="588" y="154" width="220" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="result1" value="ResultID (PK)" style="fontStyle=1" parent="results" vertex="1">
+                    <mxGeometry y="30" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="result2" value="MatchID (FK)" style="fontStyle=1" parent="results" vertex="1">
+                    <mxGeometry y="60" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="result3" value="PSH" style="fontStyle=1" parent="results" vertex="1">
+                    <mxGeometry y="90" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="result4" value="PSD" style="fontStyle=1" parent="results" vertex="1">
+                    <mxGeometry y="120" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="result5" value="PSA" style="fontStyle=1" parent="results" vertex="1">
+                    <mxGeometry y="150" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="result2" target="matches" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="378" y="364" as="sourcePoint"/>
+                        <mxPoint x="546" y="91" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="" style="endArrow=classic;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="match4" target="teams" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="294" y="512" as="sourcePoint"/>
+                        <mxPoint x="301" y="588" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="280" y="441"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="match5" target="team1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="388" y="520" as="sourcePoint"/>
+                        <mxPoint x="245" y="616" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="294" y="476"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="stat2" target="matches" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="294" y="512" as="sourcePoint"/>
+                        <mxPoint x="344" y="462" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="581" y="469"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="odds2" target="matches" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="357" y="721" as="sourcePoint"/>
+                        <mxPoint x="427" y="602" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="280" y="273"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
