@@ -8,6 +8,7 @@
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white)
 
+
 ## 📜 Project Description
 #### The football match prediction project aims to predict results of Belgian Jupiler Pro League games using scraping, machine learning, and data visualization. Using SQL for data management, Airflow to automate data updates, and Streamlit for live visualizations, this project predicts match results, displays betting odds, and shows team stats. This helps football analysts and fans make informed predictions. ####
 
@@ -25,7 +26,7 @@
 
 - #### model : Houses machine learning scripts that train prediction models on historical data and periodically retrain them with updated information. 
 
-- #### app.py: The main application script for deploying a Streamlit web interface, allowing users to explore match predictions, team stats, and visualizations.
+- #### app : The main application script for deploying a Streamlit web interface, allowing users to explore match predictions, team stats, and visualizations.
 
 
 
@@ -85,6 +86,7 @@ FOOTBALL_PREDICTION_PROJECT
 │
 ├── diagram_db.drawio
 ├── README.md
+├── JPL_Football_Predictions.py
 └── requirements.txt
 
 ```
