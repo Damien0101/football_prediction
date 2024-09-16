@@ -46,7 +46,7 @@ with col3:
 st.markdown("""
 ### Key Features:
 - **Match Predictions:** Predict match outcomes based on historical data.
-- **Stats Leaderboard:** Get insights into team performance over 10 games.
+- **Stats Leaderboard:** Get insights into team performance over the last 10 games.
 - **Team Insights:** Detailed breakdowns of team performances.
 """)
 
