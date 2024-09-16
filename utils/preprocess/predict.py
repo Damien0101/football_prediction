@@ -41,29 +41,33 @@ def get_head_to_head_stats(df, home_team, away_team):
 
 
 def get_stats(df, teams, team_status, num_games):
+    team_stats = {}  # Initialize dictionary to hold team stats
+    
     for team in teams:
-        team_stats = {
-            str(team_status)+'_average_goals_scored_'+ str(num_games): 0,
-            str(team_status)+'_average_goals_conceded_'+ str(num_games): 0,
-            str(team_status)+'_average_goal_difference_'+ str(num_games): 0}
- 
-        # Fetch last num_games where team played as home or away
+        # Fetch the last `num_games` where the team played as home or away
         team_games = df[(df['HomeTeam'] == team) | (df['AwayTeam'] == team)].head(num_games)
-        num_games = len(team_games)
+        actual_num_games = len(team_games)  # The actual number of games found
+        
+        # If the actual number of games is less than the specified number of games,
+        actual_num_games = max(1, len(team_games))
+        
         home_games = team_games[team_games['HomeTeam'] == team]
         away_games = team_games[team_games['AwayTeam'] == team]
-        if num_games == 0:
-            num_games = 1
-        # Calculate average stats
-        team_stats[str(team_status)+'_average_goals_scored_'+ str(num_games)] = (home_games['FTHG'].sum() + away_games['FTAG'].sum()) / num_games
-        team_stats[str(team_status)+'_average_goals_conceded_'+ str(num_games)] = (home_games['FTAG'].sum() + away_games['FTHG'].sum()) / num_games
-        team_stats[str(team_status)+'_average_goal_difference_'+ str(num_games)] = team_stats[str(team_status)+'_average_goals_scored_'+ str(num_games)] - team_stats[str(team_status)+'_average_goals_conceded_'+ str(num_games)]
 
+        team_stats[str(team_status) + '_average_goals_scored_' + str(num_games)] = (
+            (home_games['FTHG'].sum() + away_games['FTAG'].sum()) / actual_num_games
+        )
+        team_stats[str(team_status) + '_average_goals_conceded_' + str(num_games)] = (
+            (home_games['FTAG'].sum() + away_games['FTHG'].sum()) / actual_num_games
+        )
+        team_stats[str(team_status) + '_average_goal_difference_' + str(num_games)] = (
+            team_stats[str(team_status) + '_average_goals_scored_' + str(num_games)] - 
+            team_stats[str(team_status) + '_average_goals_conceded_' + str(num_games)]
+        )
     return team_stats
 
 
-
-df = pd.read_csv('data/cleaned_dataset.csv')
+df = pd.read_csv('data/prepredict.csv')
 
 
 
@@ -126,4 +130,4 @@ for i in range(len(df)):
 
 new_df = pd.DataFrame(rows)
 print(new_df.head())
-new_df.to_csv('data/final_stats.csv', index=False)
+new_df.to_csv('data/averages_predict.csv', index=False)

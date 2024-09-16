@@ -43,8 +43,7 @@ accuracy = accuracy_score(y_test, y_pred)
 
 probabilities = model.predict_proba(X_test)
 probabilities_df = pd.DataFrame(probabilities, columns=model.classes_)
-
-
+probabilities_df.to_csv('data/probabilities.csv', index=False)
 
 results = pd.concat([probabilities_df, y_pred_df], axis=1)
 merged_results = pd.merge(matches, results, left_index=True, right_index=True)
